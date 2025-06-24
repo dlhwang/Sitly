@@ -17,7 +17,7 @@ dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
     // WebFlux
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+//    implementation("org.springframework.boot:spring-boot-starter-webflux")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // Spring Security
@@ -47,7 +47,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+        exclude(module = "junit") // junit4 제외
     }
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("io.kotest:kotest-runner-junit5:5.8.0")

@@ -32,7 +32,7 @@ class AuthController(
                 description = "조회 성공",
                 content = [Content(schema = Schema(implementation = TokenResponse::class))]
             ),
-            ApiResponse(responseCode = "404", description = "매물 없음")
+            ApiResponse(responseCode = "404", description = "없음")
         ]
     )
     @PostMapping("/login")
