@@ -1,6 +1,6 @@
 package com.dollee.sitly.user.domain.model
 
-class User(
+data class User(
     val id: String? = null,
     val userDetail: UserDetail,
     val accountDetail: AccountDetail,

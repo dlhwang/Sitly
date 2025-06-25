@@ -12,10 +12,19 @@ class SitterEntity(
     val user: UserEntity,
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    val introduction: String,
+    private var introduction: String,
     @Column(name = "carable_age_from", nullable = false)
-    val carableAgeFrom: Int,
+    private var carableAgeFrom: Int,
     @Column(name = "carable_age_to", nullable = false)
-    val carableAgeTO: Int
+    private var carableAgeTO: Int
 ) {
+    fun modify(introduction: String, carableAgeFrom: Int, carableAgeTO: Int) {
+        this.introduction = introduction
+        this.carableAgeFrom = carableAgeFrom
+        this.carableAgeTO = carableAgeTO
+    }
+
+    fun getIntroduction(): String = introduction
+    fun getCarableAgeFrom(): Int = carableAgeFrom
+    fun getCarableAgeTo(): Int = carableAgeTO
 }

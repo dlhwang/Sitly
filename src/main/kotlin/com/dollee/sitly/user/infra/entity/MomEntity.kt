@@ -9,10 +9,17 @@ class MomEntity(
     val id: String? = null,
     @MapsId @OneToOne
     @JoinColumn(name = "user_id")
-    val user: UserEntity,
+    private var user: UserEntity,
     @Column(name = "child_note", columnDefinition = "TEXT", nullable = false)
-    val childNote: String,
+    private var childNote: String,
     @Column(name = "request_message", columnDefinition = "TEXT", nullable = false)
-    val requestMessage: String,
+    private var requestMessage: String,
 ) {
+    fun modify(childNote: String, requestMessage: String) {
+        this.childNote = childNote
+        this.requestMessage = requestMessage
+    }
+
+    fun getChildNote(): String = childNote
+    fun getRequestMessage(): String = requestMessage
 }

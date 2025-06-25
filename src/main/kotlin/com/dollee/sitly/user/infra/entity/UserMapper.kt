@@ -15,15 +15,15 @@ object UserMapper {
     fun toDomain(entity: UserEntity, sitterEntity: SitterEntity?, momEntity: MomEntity?): User =
         User(
             id = entity.id,
-            userDetail = toDomain(entity.userDetail),
-            accountDetail = toDomain(entity.accountDetail),
+            userDetail = toDomain(entity.getUserDetail()),
+            accountDetail = toDomain(entity.getAccountDetail()),
             sitter = sitterEntity?.let { toDomain(it) },
             mom = momEntity?.let { toDomain(it) },
         )
 
     fun toDomain(entity: MomEntity): Mom = Mom(
-        childNote = entity.childNote,
-        requestMessage = entity.requestMessage
+        childNote = entity.getChildNote(),
+        requestMessage = entity.getRequestMessage()
     )
 
     fun toEntity(user: User, mom: Mom): MomEntity = MomEntity(
@@ -33,9 +33,9 @@ object UserMapper {
     )
 
     fun toDomain(entity: SitterEntity): Sitter = Sitter(
-        introduction = entity.introduction,
-        carableAgeFrom = entity.carableAgeFrom,
-        carableAgeTO = entity.carableAgeTO
+        introduction = entity.getIntroduction(),
+        carableAgeFrom = entity.getCarableAgeFrom(),
+        carableAgeTO = entity.getCarableAgeTo()
     )
 
     fun toEntity(user: User, sitter: Sitter): SitterEntity = SitterEntity(

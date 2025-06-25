@@ -23,11 +23,16 @@ import org.springframework.security.web.authentication.logout.LogoutFilter
 class SecurityConfig(
     private val jwtFilter: JwtFilter
 ) {
-
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer = WebSecurityCustomizer { web ->
         web.ignoring().requestMatchers(
-            "/v3/api-docs/**", "/swagger-ui/**", "/h2-console/**", "/api/sitly/auth/login"
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/h2-console/**",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/api/sitly/auth/login"
         )
     }
 

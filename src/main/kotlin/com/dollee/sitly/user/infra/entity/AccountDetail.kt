@@ -14,4 +14,5 @@ data class AccountDetail(
     val password: EncryptedPassword,
     @Column(name = "email", nullable = false, unique = true)
     val email: Email
-)
+) {
+}
