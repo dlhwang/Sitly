@@ -6,4 +6,5 @@ interface UserRepository {
     fun findByLoginId(loginId: String): User
     fun save(user: User): User
     fun count(): Long
+    fun findById(id: String): User
 }

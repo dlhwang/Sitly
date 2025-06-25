@@ -20,7 +20,7 @@ class CustomUserDetailsService(
         val user = userRepository.findByLoginId(username)
         return AuthUser.newInstance(
             LoginId(username),
-            user.password.value,
+            user.accountDetail.password.value,
             listOf(SimpleGrantedAuthority("ROLE_USER"))
         )
     }

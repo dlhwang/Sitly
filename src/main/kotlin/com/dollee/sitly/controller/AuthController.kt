@@ -22,7 +22,7 @@ class AuthController(
         description = "로그인시도하여 토큰을 발급받습니다.",
         requestBody = io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = [Content(
-                mediaType = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+                mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = Schema(implementation = LoginRequest::class)
             )]
         ),
@@ -43,14 +43,10 @@ class AuthController(
 
     @Schema(description = "로그인 요청 객체")
     data class LoginRequest(
-        @Schema(
-            description = "사용자 아이디",
-            example = "dollee"
-        ) val username: String,
-        @Schema(
-            description = "사용자 아이디",
-            example = "qwer1234"
-        ) val password: String
+        @Schema(description = "사용자 아이디", example = "user")
+        val username: String,
+        @Schema(description = "사용자 아이디", example = "qwer1234")
+        val password: String
     )
 
     @Schema(description = "로그인 요청 객체")

@@ -26,9 +26,17 @@ class AuthUser(
         return password
     }
 
-    override fun getUsername(): String? {
+    override fun getUsername(): String {
         return username.value
     }
+
+    override fun isAccountNonExpired(): Boolean = true
+
+    override fun isAccountNonLocked(): Boolean = true
+
+    override fun isCredentialsNonExpired(): Boolean = true
+
+    override fun isEnabled(): Boolean = true
 
     companion object {
         @Serial

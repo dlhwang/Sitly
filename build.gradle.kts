@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-    id("org.springframework.boot") version "3.5.0"
+    id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -16,8 +16,8 @@ repositories {
 dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
-    // WebFlux
-//    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // Spring Security
@@ -41,7 +41,7 @@ dependencies {
     implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.3.0")
 
     // 스웨거
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
