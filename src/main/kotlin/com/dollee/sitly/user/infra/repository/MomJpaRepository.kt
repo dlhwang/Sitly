@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface MomJpaRepository : JpaRepository<MomEntity, String> {
     fun findByUser_AccountDetail_LoginId(loginId: LoginId): MomEntity?
+    fun findByUser_Id(id: String): MomEntity?
 }

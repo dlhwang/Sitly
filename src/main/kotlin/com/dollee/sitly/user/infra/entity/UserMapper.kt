@@ -45,12 +45,14 @@ object UserMapper {
         carableAgeTO = entity.getCarableAgeTo()
     )
 
-    fun toEntity(user: UserEntity, sitter: Sitter): SitterEntity = SitterEntity(
-        user = user,
-        introduction = sitter.introduction,
-        carableAgeFrom = sitter.carableAgeFrom,
-        carableAgeTO = sitter.carableAgeTO
-    )
+    fun toEntity(user: UserEntity, sitter: Sitter): SitterEntity {
+        return SitterEntity(
+            user = user,
+            introduction = sitter.introduction,
+            carableAgeFrom = sitter.carableAgeFrom,
+            carableAgeTO = sitter.carableAgeTO
+        )
+    }
 
     fun toDomain(userDetail: com.dollee.sitly.user.infra.entity.UserDetail): UserDetail =
         UserDetail(

@@ -19,7 +19,7 @@ class AuthControllerTest @Autowired constructor(
 
         val json = """
         {
-          "username": "dollee",
+          "username": "user",
           "password": "qwer1234"
         }
         """.trimIndent()

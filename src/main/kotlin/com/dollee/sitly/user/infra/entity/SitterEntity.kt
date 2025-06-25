@@ -6,6 +6,7 @@ import jakarta.persistence.*
 @Table(name = "users_sitter")
 class SitterEntity(
     @Id
+    val id: String? = null,
     @MapsId @OneToOne
     @JoinColumn(name = "user_id")
     val user: UserEntity,
@@ -26,5 +27,4 @@ class SitterEntity(
     fun getIntroduction(): String = introduction
     fun getCarableAgeFrom(): Int = carableAgeFrom
     fun getCarableAgeTo(): Int = carableAgeTO
-    fun getId(): String = user.id!!
 }

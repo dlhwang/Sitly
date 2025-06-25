@@ -27,12 +27,21 @@ class JpaUserRepository(
     override fun save(user: User): User {
         val userEntity = toEntity(user)
         val savedUser = repository.save(userEntity)
-
+        repository.flush()
+        print(savedUser.id)
         user.sitter?.let {
-            sitterJpaRepository.save(toEntity(savedUser, it))
+            val existing = savedUser.id?.let { id -> sitterJpaRepository.findByUser_Id(id) }
+            existing?.modify(it.introduction, it.carableAgeFrom, it.carableAgeTO)
+                ?: sitterJpaRepository.save(toEntity(savedUser, it))
         }
         user.mom?.let {
-            momJpaRepository.save(toEntity(savedUser, it))
+            val existing = savedUser.id?.let { id -> momJpaRepository.findByUser_Id(id) }
+            if (existing != null) {
+                existing.modifyRequestMessage(it.requestMessage)
+                existing.addChild(it.getChildren().map { c -> toEntity(c) })
+            } else {
+                momJpaRepository.save(toEntity(savedUser, it))
+            }
         }
 
         return savedUser.id?.let { findById(it) }

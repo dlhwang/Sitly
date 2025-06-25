@@ -6,6 +6,7 @@ import jakarta.persistence.*
 @Table(name = "users_mom")
 class MomEntity(
     @Id
+    val id: String? = null,
     @MapsId @OneToOne
     @JoinColumn(name = "user_id")
     val user: UserEntity,

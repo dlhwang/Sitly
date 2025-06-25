@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface SitterJpaRepository : JpaRepository<SitterEntity, String> {
     fun findByUser_AccountDetail_LoginId(loginId: LoginId): SitterEntity?
+    fun findByUser_Id(id: String): SitterEntity?
 }
