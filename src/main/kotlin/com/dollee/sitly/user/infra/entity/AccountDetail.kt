@@ -12,7 +12,7 @@ data class AccountDetail(
     val loginId: LoginId,
     @Column(name = "password", nullable = false)
     val password: EncryptedPassword,
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     val email: Email
 ) {
 }

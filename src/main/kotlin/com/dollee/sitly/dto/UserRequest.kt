@@ -3,6 +3,7 @@ package com.dollee.sitly.dto
 import com.dollee.sitly.user.domain.model.enumtype.Gender
 import com.dollee.sitly.user.domain.service.PasswordPolicy.PASSWORD_LENGTH
 import com.fasterxml.jackson.annotation.JsonFormat
+import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.Valid
 import jakarta.validation.constraints.*
@@ -73,7 +74,13 @@ data class SitterSave(
 
 @Schema(description = "맘 회원 정보")
 data class MomSave(
-    @Schema(description = "아이 정보", example = "홍길동")
+    @field:ArraySchema(
+        schema = Schema(implementation = ChildSave::class),
+        arraySchema = Schema(
+            description = "아이 정보",
+            example = "[{\"detail\": {\"name\": \"홍자녀\", \"birthdate\": \"2018-01-01\", \"gender\": \"남\"}}]"
+        )
+    )
     @field:NotBlank(message = "아이 정보를 작성해주세요.")
     val child: List<ChildSave>,
     @Schema(description = "신청 내용", example = "하루에 2시간 정도 한글놀이를 해 줄 수 있는 시터를 찾습니다 :)")

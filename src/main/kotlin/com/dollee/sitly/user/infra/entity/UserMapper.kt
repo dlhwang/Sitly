@@ -26,9 +26,9 @@ object UserMapper {
         child = entity.getChildRen().map { toDomain(it) }.toMutableList()
     )
 
-    fun toEntity(user: User, mom: Mom): MomEntity {
+    fun toEntity(user: UserEntity, mom: Mom): MomEntity {
         val momEntity = MomEntity(
-            user = toEntity(user),
+            user = user,
             requestMessage = mom.requestMessage
         )
 
@@ -45,8 +45,8 @@ object UserMapper {
         carableAgeTO = entity.getCarableAgeTo()
     )
 
-    fun toEntity(user: User, sitter: Sitter): SitterEntity = SitterEntity(
-        user = toEntity(user),
+    fun toEntity(user: UserEntity, sitter: Sitter): SitterEntity = SitterEntity(
+        user = user,
         introduction = sitter.introduction,
         carableAgeFrom = sitter.carableAgeFrom,
         carableAgeTO = sitter.carableAgeTO

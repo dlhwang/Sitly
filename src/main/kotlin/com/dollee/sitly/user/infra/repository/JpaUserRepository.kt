@@ -25,10 +25,17 @@ class JpaUserRepository(
 
     @Transactional
     override fun save(user: User): User {
-        val save = repository.save(UserMapper.toEntity(user))
-        user.sitter?.let { sitterJpaRepository.save(UserMapper.toEntity(user, it)) }
-        user.mom?.let { momJpaRepository.save(UserMapper.toEntity(user, it)) }
-        return save.id?.let { findById(it) }
+        val userEntity = toEntity(user)
+        val savedUser = repository.save(userEntity)
+
+        user.sitter?.let {
+            sitterJpaRepository.save(toEntity(savedUser, it))
+        }
+        user.mom?.let {
+            momJpaRepository.save(toEntity(savedUser, it))
+        }
+
+        return savedUser.id?.let { findById(it) }
             ?: throw IllegalStateException("ID가 null이므로 조회할 수 없습니다.")
     }
 
@@ -81,7 +88,7 @@ class JpaUserRepository(
             ?: throw DataNotFoundException("해당 사용자가 없습니다: ${loginId}")
         entity.modify(sitter.introduction, sitter.carableAgeFrom, sitter.carableAgeTO)
         val save = sitterJpaRepository.save(entity)
-        val id = save.id ?: throw IllegalStateException("저장된 Sitter의 ID가 null입니다.")
+        val id = save.user.id ?: throw IllegalStateException("저장된 Sitter의 ID가 null입니다.")
         return findById(id)
     }
 
@@ -98,7 +105,7 @@ class JpaUserRepository(
         entity.addChild(mom.getChildren().map { it -> toEntity(it) })
 
         val save = momJpaRepository.save(entity)
-        val id = save.id ?: throw IllegalStateException("저장된 Sitter의 ID가 null입니다.")
+        val id = save.user.id ?: throw IllegalStateException("저장된 Sitter의 ID가 null입니다.")
         return findById(id)
     }
 }

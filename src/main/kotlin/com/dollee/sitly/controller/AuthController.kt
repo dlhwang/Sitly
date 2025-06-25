@@ -1,6 +1,10 @@
 package com.dollee.sitly.controller
 
+import com.dollee.sitly.dto.UserRequest
+import com.dollee.sitly.dto.UserResponse
+import com.dollee.sitly.dto.toCommand
 import com.dollee.sitly.service.AuthService
+import com.dollee.sitly.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -15,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/sitly/auth")
 class AuthController(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val service: UserService
 ) {
     @Operation(
         summary = "API 로그인",
@@ -39,6 +44,29 @@ class AuthController(
     suspend fun login(@RequestBody request: LoginRequest): ResponseEntity<TokenResponse> {
         val token = authService.login(request.username, request.password)
         return ResponseEntity.ok(TokenResponse(token))
+    }
+
+    @Operation(
+        summary = "API 회원 정보 등록",
+        description = "API 회원 정보를 등록 합니다.",
+        requestBody = io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = [Content(
+                mediaType = MediaType.APPLICATION_JSON_VALUE,
+                schema = Schema(implementation = UserRequest::class)
+            )]
+        ),
+        responses = [
+            ApiResponse(
+                responseCode = "201",
+                description = "등록 성공",
+                content = [Content(schema = Schema(implementation = UserResponse::class))]
+            ),
+            ApiResponse(responseCode = "400", description = "등록 실패")
+        ]
+    )
+    @PostMapping()
+    fun post(@RequestBody userRequest: UserRequest): ResponseEntity<UserResponse> {
+        return ResponseEntity.ok(service.register(userRequest.toCommand()))
     }
 
     @Schema(description = "로그인 요청 객체")

@@ -63,12 +63,12 @@ class UserDomainService(
         mom = command.mom?.let {
             Mom(
                 requestMessage = it.requestMessage,
-                child = it.child.map { it ->
+                child = it.child.map { c ->
                     Child(
                         userDetail = UserDetail(
-                            name = it.detail.name,
-                            birthdate = it.detail.birthdate,
-                            gender = it.detail.gender
+                            name = c.detail.name,
+                            birthdate = c.detail.birthdate,
+                            gender = c.detail.gender
                         )
                     )
                 }.toMutableList()

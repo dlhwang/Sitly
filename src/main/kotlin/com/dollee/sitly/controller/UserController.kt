@@ -22,30 +22,6 @@ class UserController(
 ) {
 
     @Operation(
-        summary = "API 회원 정보 등록",
-        description = "API 회원 정보를 등록 합니다.",
-        requestBody = io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = [Content(
-                mediaType = MediaType.APPLICATION_JSON_VALUE,
-                schema = Schema(implementation = UserRequest::class)
-            )]
-        ),
-        responses = [
-            ApiResponse(
-                responseCode = "201",
-                description = "등록 성공",
-                content = [Content(schema = Schema(implementation = UserResponse::class))]
-            ),
-            ApiResponse(responseCode = "400", description = "등록 실패")
-        ]
-    )
-    @PostMapping()
-    fun post(@RequestBody userRequest: UserRequest): ResponseEntity<UserResponse> {
-        return ResponseEntity.ok(service.register(userRequest.toCommand()))
-    }
-
-
-    @Operation(
         summary = "API 회원 본인 정보",
         description = "API 회원 본인 정보를 반환합니다.",
         responses = [

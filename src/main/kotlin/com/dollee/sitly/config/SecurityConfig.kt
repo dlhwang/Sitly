@@ -32,6 +32,7 @@ class SecurityConfig(
             "/swagger-ui.html",
             "/v3/api-docs/**",
             "/v3/api-docs.yaml",
+            "/api/sitly/auth",
             "/api/sitly/auth/login"
         )
     }
