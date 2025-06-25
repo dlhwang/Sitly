@@ -39,6 +39,11 @@ data class SitterVO(
 
 @Schema(description = "맘 회원 정보")
 data class MomVO(
-    @Schema(description = "아이 정보") val childNote: String,
+    @Schema(description = "아이 정보") val child: List<ChildVO>,
     @Schema(description = "신청 내용") val requestMessage: String
+)
+
+@Schema(description = "맘 자녀 회원 정보")
+data class ChildVO(
+    @Schema(description = "아이 정보") val detail: UserDetailVO,
 )

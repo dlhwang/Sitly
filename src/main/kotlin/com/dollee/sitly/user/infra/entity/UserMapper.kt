@@ -22,15 +22,22 @@ object UserMapper {
         )
 
     fun toDomain(entity: MomEntity): Mom = Mom(
-        childNote = entity.getChildNote(),
-        requestMessage = entity.getRequestMessage()
+        requestMessage = entity.getRequestMessage(),
+        child = entity.getChildRen().map { toDomain(it) }.toMutableList()
     )
 
-    fun toEntity(user: User, mom: Mom): MomEntity = MomEntity(
-        user = toEntity(user),
-        childNote = mom.childNote,
-        requestMessage = mom.requestMessage
-    )
+    fun toEntity(user: User, mom: Mom): MomEntity {
+        val momEntity = MomEntity(
+            user = toEntity(user),
+            requestMessage = mom.requestMessage
+        )
+
+        mom.getChildren()
+            .map { toEntity(it) }
+            .forEach { momEntity.addChild(it) }
+
+        return momEntity
+    }
 
     fun toDomain(entity: SitterEntity): Sitter = Sitter(
         introduction = entity.getIntroduction(),
@@ -73,4 +80,13 @@ object UserMapper {
             email = domain.email
         )
 
+    fun toDomain(entity: ChildEntity): Child = Child(
+        id = entity.id,
+        userDetail = toDomain(entity.getUserDetail()),
+    )
+
+    fun toEntity(domain: Child): ChildEntity = ChildEntity(
+        id = domain.id,
+        userDetail = toEntity(domain.userDetail),
+    )
 }

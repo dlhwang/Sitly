@@ -62,8 +62,16 @@ class UserDomainService(
         },
         mom = command.mom?.let {
             Mom(
-                childNote = it.childNote,
-                requestMessage = it.requestMessage
+                requestMessage = it.requestMessage,
+                child = it.child.map { it ->
+                    Child(
+                        userDetail = UserDetail(
+                            name = it.detail.name,
+                            birthdate = it.detail.birthdate,
+                            gender = it.detail.gender
+                        )
+                    )
+                }.toMutableList()
             )
         }
     )
@@ -87,7 +95,15 @@ class UserDomainService(
     )
 
     fun convert(command: MomInput): Mom = Mom(
-        childNote = command.childNote,
+        child = command.child.map { it ->
+            Child(
+                userDetail = UserDetail(
+                    name = it.detail.name,
+                    birthdate = it.detail.birthdate,
+                    gender = it.detail.gender
+                )
+            )
+        }.toMutableList(),
         requestMessage = command.requestMessage,
     )
 }

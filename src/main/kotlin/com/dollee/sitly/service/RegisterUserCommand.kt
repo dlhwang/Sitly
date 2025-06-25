@@ -29,6 +29,10 @@ data class SitterInput(
 )
 
 data class MomInput(
-    val childNote: String,
+    val child: List<ChildInput>,
     val requestMessage: String
+)
+
+data class ChildInput(
+    val detail: UserInput,
 )

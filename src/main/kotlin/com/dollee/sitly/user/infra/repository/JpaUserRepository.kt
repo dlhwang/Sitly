@@ -7,6 +7,7 @@ import com.dollee.sitly.user.infra.entity.MomEntity
 import com.dollee.sitly.user.infra.entity.SitterEntity
 import com.dollee.sitly.user.infra.entity.UserEntity
 import com.dollee.sitly.user.infra.entity.UserMapper
+import com.dollee.sitly.user.infra.entity.UserMapper.toEntity
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -91,7 +92,11 @@ class JpaUserRepository(
     ): User {
         val entity = momJpaRepository.findByUser_AccountDetail_LoginId(LoginId(loginId))
             ?: throw DataNotFoundException("해당 사용자가 없습니다: $loginId")
-        entity.modify(mom.childNote, mom.requestMessage)
+        entity.modifyRequestMessage(mom.requestMessage)
+
+        entity.clearChildren()
+        entity.addChild(mom.getChildren().map { it -> toEntity(it) })
+
         val save = momJpaRepository.save(entity)
         val id = save.id ?: throw IllegalStateException("저장된 Sitter의 ID가 null입니다.")
         return findById(id)

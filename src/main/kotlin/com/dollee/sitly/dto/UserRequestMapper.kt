@@ -24,7 +24,15 @@ fun UserRequest.toCommand(): RegisterUserCommand =
         },
         mom = this.momDetail?.let {
             MomInput(
-                childNote = it.childNote,
+                child = it.child.map { c ->
+                    ChildInput(
+                        detail = UserInput(
+                            name = c.detail.name,
+                            birthdate = c.detail.birthdate,
+                            gender = c.detail.gender
+                        )
+                    )
+                },
                 requestMessage = it.requestMessage
             )
         }
@@ -49,6 +57,14 @@ fun SitterSave.toCommand(): SitterInput = SitterInput(
 )
 
 fun MomSave.toCommand(): MomInput = MomInput(
-    childNote = this.childNote,
+    child = this.child.map { c ->
+        ChildInput(
+            detail = UserInput(
+                name = c.detail.name,
+                birthdate = c.detail.birthdate,
+                gender = c.detail.gender
+            )
+        )
+    },
     requestMessage = this.requestMessage
 )

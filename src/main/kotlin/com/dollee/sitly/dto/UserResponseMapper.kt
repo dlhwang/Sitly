@@ -18,6 +18,14 @@ fun User.toResponse(): UserResponse = UserResponse(
         SitterVO(it.introduction, it.carableAgeFrom, it.carableAgeTO)
     },
     mom = mom?.let {
-        MomVO(it.childNote, it.requestMessage)
+        MomVO(it.getChildren().map { it ->
+            ChildVO(
+                detail = UserDetailVO(
+                    name = it.userDetail.name,
+                    birthdate = it.userDetail.birthdate,
+                    gender = it.userDetail.gender
+                )
+            )
+        }, it.requestMessage)
     }
 )
