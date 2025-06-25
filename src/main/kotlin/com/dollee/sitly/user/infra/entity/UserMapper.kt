@@ -15,35 +15,44 @@ object UserMapper {
     fun toDomain(entity: UserEntity, sitterEntity: SitterEntity?, momEntity: MomEntity?): User =
         User(
             id = entity.id,
-            userDetail = toDomain(entity.userDetail),
-            accountDetail = toDomain(entity.accountDetail),
+            userDetail = toDomain(entity.getUserDetail()),
+            accountDetail = toDomain(entity.getAccountDetail()),
             sitter = sitterEntity?.let { toDomain(it) },
             mom = momEntity?.let { toDomain(it) },
         )
 
     fun toDomain(entity: MomEntity): Mom = Mom(
-        childNote = entity.childNote,
-        requestMessage = entity.requestMessage
+        requestMessage = entity.getRequestMessage(),
+        child = entity.getChildRen().map { toDomain(it) }.toMutableList()
     )
 
-    fun toEntity(user: User, mom: Mom): MomEntity = MomEntity(
-        user = toEntity(user),
-        childNote = mom.childNote,
-        requestMessage = mom.requestMessage
-    )
+    fun toEntity(user: UserEntity, mom: Mom): MomEntity {
+        val momEntity = MomEntity(
+            user = user,
+            requestMessage = mom.requestMessage
+        )
+
+        mom.getChildren()
+            .map { toEntity(it) }
+            .forEach { momEntity.addChild(it) }
+
+        return momEntity
+    }
 
     fun toDomain(entity: SitterEntity): Sitter = Sitter(
-        introduction = entity.introduction,
-        carableAgeFrom = entity.carableAgeFrom,
-        carableAgeTO = entity.carableAgeTO
+        introduction = entity.getIntroduction(),
+        carableAgeFrom = entity.getCarableAgeFrom(),
+        carableAgeTO = entity.getCarableAgeTo()
     )
 
-    fun toEntity(user: User, sitter: Sitter): SitterEntity = SitterEntity(
-        user = toEntity(user),
-        introduction = sitter.introduction,
-        carableAgeFrom = sitter.carableAgeFrom,
-        carableAgeTO = sitter.carableAgeTO
-    )
+    fun toEntity(user: UserEntity, sitter: Sitter): SitterEntity {
+        return SitterEntity(
+            user = user,
+            introduction = sitter.introduction,
+            carableAgeFrom = sitter.carableAgeFrom,
+            carableAgeTO = sitter.carableAgeTO
+        )
+    }
 
     fun toDomain(userDetail: com.dollee.sitly.user.infra.entity.UserDetail): UserDetail =
         UserDetail(
@@ -73,4 +82,13 @@ object UserMapper {
             email = domain.email
         )
 
+    fun toDomain(entity: ChildEntity): Child = Child(
+        id = entity.id,
+        userDetail = toDomain(entity.getUserDetail()),
+    )
+
+    fun toEntity(domain: Child): ChildEntity = ChildEntity(
+        id = domain.id,
+        userDetail = toEntity(domain.userDetail),
+    )
 }

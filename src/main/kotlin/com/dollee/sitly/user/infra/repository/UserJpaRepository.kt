@@ -12,8 +12,8 @@ interface UserJpaRepository : JpaRepository<UserEntity, String> {
         """
         SELECT u, s, m
         FROM UserEntity u
-        LEFT JOIN SitterEntity s ON s.id = u.id
-        LEFT JOIN MomEntity m ON m.id = u.id
+        LEFT JOIN SitterEntity s ON s.user.id = u.id
+        LEFT JOIN MomEntity m ON m.user.id = u.id
         WHERE u.id = :userId
     """
     )

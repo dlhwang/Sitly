@@ -12,10 +12,10 @@ class UserEntity(
     @Id @Ulid
     val id: String? = null,
 
-    @get:Embedded
-    val userDetail: UserDetail,
+    @Embedded private var userDetail: UserDetail,
 
-    @get:Embedded
-    val accountDetail: AccountDetail,
+    @Embedded private var accountDetail: AccountDetail,
 ) {
+    fun getUserDetail(): UserDetail = userDetail
+    fun getAccountDetail(): AccountDetail = accountDetail
 }

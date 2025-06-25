@@ -1,23 +1,39 @@
 package com.dollee.sitly.service
 
-import com.dollee.sitly.dto.UserRequest
 import com.dollee.sitly.dto.UserResponse
 import com.dollee.sitly.dto.toResponse
-import com.dollee.sitly.user.domain.repository.UserRepository
+import com.dollee.sitly.user.service.UserDomainService
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    val userRepository: UserRepository
+    val userDomainService: UserDomainService
 ) {
     fun getMyInfo(loginId: String): UserResponse {
-        val user = userRepository.findByLoginId(loginId)
-        val found = user.id?.let { userRepository.findById(it) }
-            ?: throw IllegalArgumentException("로그인 아이디의 USER ID가 없습니다 : $loginId")
-        return found.toResponse()
+        return userDomainService.getMyInfo(loginId).toResponse()
     }
 
-    fun register(userRequest: UserRequest): UserResponse {
-        TODO()
+    fun register(command: RegisterUserCommand): UserResponse {
+        return userDomainService.register(command).toResponse()
+    }
+
+    fun modify(loginId: String, command: RegisterUserCommand): UserResponse {
+        return userDomainService.modify(loginId, command).toResponse()
+    }
+
+    fun modify(loginId: String, command: UserInput): UserResponse {
+        return userDomainService.modify(loginId, command).toResponse()
+    }
+
+    fun modify(loginId: String, command: AccountInput): UserResponse {
+        return userDomainService.modify(loginId, command).toResponse()
+    }
+
+    fun modify(loginId: String, command: SitterInput): UserResponse {
+        return userDomainService.modify(loginId, command).toResponse()
+    }
+
+    fun modify(loginId: String, command: MomInput): UserResponse {
+        return userDomainService.modify(loginId, command).toResponse()
     }
 }
